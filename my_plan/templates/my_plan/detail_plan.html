@@ -1,0 +1,58 @@
+{% include 'header.html' with tab=3%}
+
+
+   <section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Detalles del Plan</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detalles del Plan</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+<style>
+    #all{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+</style>
+
+<div id="all">
+    <div style="text-align: center;">
+    <h3>{{ my_plan.name }}</h3>
+    </div>
+    <h4>{{ my_plan.program.faculty.university }}</h4>
+    <h5>{{ my_plan.program.name }}</h5>
+
+    {% if my_plan.costo_matricula == True %}
+        <div style="border: 1px solid black; margin-right: 80%;border-radius: 20px; padding: 10px; margin-top:20px;">
+            <h5> Costo Matricula: </h5>
+            <b> $ {{ my_plan.program.tuition_fee }}</b> COP <br>
+        </div>
+    {% endif %}
+
+<div style="border: 1px solid black; margin-right: 80%;border-radius: 20px; padding: 10px; margin-top: 20px;">
+    <h5> Costos Mensuales: </h5>
+    {% if my_plan.costo_habitacion == True %}
+        <h6> Costo promedio habitación: </h6>
+        <b>{{ my_plan.cost.costo_habitacion }}</b> <br>
+    {% endif %}
+    {% if my_plan.costo_comida == True %}
+        <h6> Costo promedio comida: </h6>
+        <b>{{ my_plan.cost.costo_comida }}</b> <br>
+    {% endif %}
+    {% if my_plan.costo_transporte == True %}
+        <h6> Costo promedio transporte: </h6>
+        <b> {{ my_plan.cost.costo_transporte }} </b> <br>
+    {% endif %}
+    <b> ____________________________ </b> <br>
+    <h6> Total: </h6>
+    <b> {{ total }}</b> <br>
+ </div>
+</div>
+{% include 'footer.html' %}

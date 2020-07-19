@@ -1,0 +1,10 @@
+{% include 'header.html' with tab=2%}
+
+{% if user.is_authenticated and user.id == program.user.id  %} <!-- Algo asi la dvd -->
+
+    <!-- Cargar el programa con la info en los fields, y dejarlos editables y darle a un
+        boton save o back y ya está crack -->
+
+{% endif %}
+
+{% include 'footer.html' %}

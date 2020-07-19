@@ -1,0 +1,71 @@
+{% include 'header.html' with tab=2%}
+
+{% if user.is_authenticated %}
+
+
+
+    <section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Mis Planes</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Mis Planes</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <style>
+    #all{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+</style>
+
+    <div id="all">
+
+<div class="row" style="margin-left: 12%;margin-bottom: 15px;">
+    <a href="create/" class="btn btn-outline-secondary" style="margin-right: 0px;">
+        <span class="glyphicon glyphicon-remove-circle" checked="true"></span> Crear nuevo plan</a>
+    </a>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <h6 class="text-muted">Lista de mis planes</h6>
+      <ul class="list-group">
+          {% for plan in my_plans %}
+        <a href="{{ plan.id }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <div class="flex-column">
+            <h4> {{ plan.name }} </h4>
+
+            <!-- <p><small>by Miguel de Cervantes</small></p>
+            <span class="badge badge-info badge-pill"> 2 Copies in Stock</span>
+            -->
+              <div>
+                  <h4> <span class="badge badge-light"> {{ plan.program.faculty.university.name }}</span> </h4>
+             <h5> <span class="badge badge-info ">  {{ plan.program.name }}
+              </span></h5>
+              </div>
+          </div>
+        </a>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% else %}
+
+<p>You are not logged in</p>
+<a href="/accounts/login/">login</a>
+
+{% endif %}
+
+</div>
+{% include 'footer.html' %}

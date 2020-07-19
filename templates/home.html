@@ -1,0 +1,144 @@
+{% include 'header.html' %}
+
+<!--
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% load socialaccount %}
+
+<h1>UrU</h1>
+{% if user.is_authenticated %}
+<p>Bievenido {{ user.username }} !!!</p>
+{% else %}
+    <a href="{% provider_login_url 'github' %}">Logearse con Github</a>
+    <br/>
+    <a href="{% provider_login_url 'google' %}">Logearse con Google</a>
+{% endif %}
+{% endblock %}
+
+-->
+
+    <!--================Home Banner Area =================-->
+    <section class="home_banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-6 col-xl-5 offset-xl-7">
+                        <div class="banner_content">
+                            <h3>Toma una<br/>mejor decisión</h3>
+                            <p>Ahorra tiempo y esfuerzo buscando tu carrera ideal en la universidad ideal, nosotros centralizamos todo para ti.</p>
+                            <a class="banner_btn" href="/geo">Comienza a explorar<i class="ti-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Service  Area =================-->
+    <section class="service-area area-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Single service -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="single-service">
+                        <div class="service-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="service-content">
+                            <h5>Qué quieres ser</h5>
+                            <p>Encuentra la mejor ruta para cumplir su trabajo soñado. No importa si actualmente no sabes qué estudiar.</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single service -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="single-service">
+                        <div class="service-icon">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <div class="service-content">
+                            <h5>Qué puedes hacer</h5>
+                            <p>Encuentra cientas de carreras, compara, opina y haz que crezca la comunidad</p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Single service -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="single-service">
+                        <div class="service-icon">
+                            <i class="ti-headphone-alt"></i>
+                        </div>
+                        <div class="service-content">
+                            <h5>Contacto</h5>
+                            <p>Te contactamos con las universidades de tu preferencia para que puedas conocer más a fondo.</p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!--================Service Area end =================-->
+
+
+    <
+
+    <!--================Feature  Area =================-->
+    <section class="feature-area area-padding bg_one">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="offset-lg-6 col-lg-6">
+                    <div class="area-heading light">
+                        <h4>Haz más con menos <br></h4>
+                        <p>A la hora de estudiar existen demasiadas opciones que debes contemplar, y también existen muchas oportunidades que debes aprovechar, no las pierdas y usa Your U.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-">
+                            <div class="single-feature d-flex">
+                                <div class="feature-icon">
+                                    <i class="ti-layers"></i>
+                                </div>
+                                <div class="single-feature-content">
+                                    <h5>Crear Planes De Estudio</h5>
+                                    <p>Deja que nosotros nos preocupemos por ti te actualizaremos sobre novedad de la universidad que quieres.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-">
+                            <div class="single-feature d-flex">
+                                <div class="feature-icon">
+                                    <i class="ti-layers"></i>
+                                </div>
+                                <div class="single-feature-content">
+                                    <h5>Compara y elige</h5>
+                                    <p>Compara cientos de universidades y carreras, en poco tiempo. Toma la mejor decisión. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Feature Area End =================-->
+
+
+
+
+
+
+
+
+
+{% include 'footer.html' %}

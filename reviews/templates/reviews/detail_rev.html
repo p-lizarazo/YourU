@@ -1,0 +1,44 @@
+{% include 'header.html' with tab=3%}
+
+   <section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Detalle Opinión</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detalle Opinión</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+<style>
+    #all{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+</style>
+
+<div id="all">
+
+<b>Usuario</b>:<p>{{ review.user.username }}</p>
+<b>Fecha de creación</b>:<p>{{ review.create_date }}</p>
+
+<b>Nombre de Universidad</b>: <br>
+    <a href="/university/{{ review.university_id }}">{{ review.university.name }}</a> <br>
+<b>Nombre del programa:</b>:<br>
+    <a href="/university/{{ review.university_id }}/{{ review.program.faculty_id }}/{{ review.program_id }}" >{{ review.program.name }}</a> <br>
+
+<b>Calificación a la universidad: </b>: <p>{{ review.uni_calification }}</p>
+<b>Descripción de experiencia en la universidad</b>:<p>{{ review.uni_description }}</p>
+
+<b>Calificación al programa: </b>:
+<p>{{ review.prog_calification }}</p>
+<b>Descripción de experiencia en el programa</b>:
+<p>{{ review.prog_description }}</p>
+
+</div>
+
+{% include 'footer.html' %}

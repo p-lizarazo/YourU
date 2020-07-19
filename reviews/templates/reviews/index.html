@@ -1,0 +1,81 @@
+{% include 'header.html' with tab=3%}
+
+<section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Opinión</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Opinión</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+<style>
+    #all{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+</style>
+
+<div id="all">
+
+<div class="row" style="margin-left: 12%;margin-bottom: 15px;">
+    <a href="create/" class="btn btn-outline-secondary" style="margin-right: 0px;">
+        <span class="glyphicon glyphicon-remove-circle" checked="true"></span> Crear review</a>
+    </a>
+</div>
+{% load static %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-10">
+      <h6 class="text-muted">Opiniones</h6>
+      <ul class="list-group" style="display:flex;">
+          {% for review in reviews %}
+            <a href="{{ review.id }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                <div style="margin-right: 30px">
+                     <img src="{% static "img/profile.png" %}" alt="Smiley face" height="42" width="42"> <br>
+                    {{ review.user.username }} <br>
+                    {{ review.create_date }}
+                </div>
+
+              <div class="flex-column">
+
+
+
+                  <h5>{{ review.university.name }}</h5>
+                  <h6>{{ review.program.name }}</h6>
+                    <h6>Calificación Universidad:</h6>
+                  <p>{{ review.uni_calification }}</p>
+                  <h6>  Experiencia en la universidad: </h6>
+                  <p>{{ review.uni_description }}</p>
+
+
+
+                <!-- <p><small>by Miguel de Cervantes</small></p>
+                <span class="badge badge-info badge-pill"> 2 Copies in Stock</span>
+
+                  <div>
+                  <span class="badge badge-info badge-pill"> <medium> {{ plan.program.name }} </medium>
+                  </span>
+                      <p>
+                          Costo total aproximado: {{ plan.cost }}
+                      </p>
+                  </div>
+                  -->
+              </div>
+
+            </a>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+{% include 'footer.html' %}

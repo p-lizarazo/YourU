@@ -1,0 +1,101 @@
+<style>
+    /* Set the size of the div element that contains the map */
+    #map {
+        height: 600px;  /* The height is 400 pixels */
+        width: 90%;  /* The width is the width of the web page */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #listChoice{
+        margin-top: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    #map-container{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 2px solid rgba(0, 0, 0, 0.55);;
+        border-radius: 5px;
+        padding: 10px;
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+</style>
+{% include 'header.html' with tab=1%}
+
+<section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Universidades</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Universidades</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <div id="listChoice">
+    <h3><b> Encontrar por: </b> <br></h3>
+
+    <a href="/university" class="btn btn-outline-secondary" style="margin-right: 0px;">
+              <span class="glyphicon glyphicon-remove-circle" checked="true"></span> Lista
+    </a>
+    <a href="/geo" class="btn btn-outline-secondary">
+              <span class="glyphicon glyphicon-remove-circle"></span> Mapa
+    </a>
+    </div>
+    <!--The div element for the map -->
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <script>
+    function initMap() {
+          var uluru = {lat: 4.6285554, lng: -74.0648556};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+
+        var lat_num;
+        var lon_num;
+        var latLng;
+        var infoWindow ;
+        var contentString;
+        var marker;
+        var infowindow ;
+        infoWindow = new google.maps.InfoWindow;
+        {% for uni in universities %}
+            lat_num = {{ uni.geolocation.lat  }};
+           lon_num = {{ uni.geolocation.lon  }};
+            uluru = {lat: lat_num, lng: lon_num};
+            latLng = new google.maps.LatLng(lat_num,lon_num);
+
+
+        infowindow = new google.maps.InfoWindow;
+
+
+            marker = new google.maps.Marker({position: latLng, map: map});
+
+
+             google.maps.event.addListener(marker, "click", function(){
+                 infowindow.setContent("<a href='/university/{{ uni.id }}/'> {{ uni.name }} </a>");
+                 infowindow.open(this.map, this);
+            });
+
+
+        {% endfor %}
+    }
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHVmfFtn7Mmjh4YvgpbUO7nzENtKujPkU&callback=initMap">
+    </script>
+
+{% include 'footer.html' %}

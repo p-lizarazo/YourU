@@ -1,0 +1,212 @@
+{% include 'header.html' with tab=1%}
+
+
+<style>
+
+    #unis{
+        display: flex;
+        padding:7px;
+    }
+    .centered-container {
+        width: 100%;
+        padding: 20px;
+        flex-grow: 1;
+    }
+
+    .centered-container .container .row{
+        justify-content: center;
+    }
+    #filters{
+        margin-top: 10px;
+        margin-bottom: 10px;
+       border: 2px solid black;;
+         border-radius: 5px;
+        padding: 7px;
+    }
+    #listChoice{
+        margin-top: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    #all{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+
+</style>
+
+    <section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Universidades</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Universidades</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+<div id="all">
+
+<div id="listChoice">
+    <h3><b> Encontrar por: </b> <br> </h3>
+
+    <a href="/university" class="btn btn-outline-secondary" style="margin-right: 0px;">
+              <span class="glyphicon glyphicon-remove-circle" checked="true"></span> Lista
+    </a>
+    <a href="/geo" class="btn btn-outline-secondary">
+              <span class="glyphicon glyphicon-remove-circle"></span> Mapa
+    </a>
+</div>
+<div id="unis">
+<div>
+    <div id="filters">
+        <h5> <b> Ordenar por:</b> </h5>
+            <select id="mySelect" onchange="myFunction()" >
+                <option>
+
+                </option>
+                <option value="A-Z" {% if request.GET.order_by  == "AZ" %} selected {% endif %}>
+
+                    De la A-Z
+                </option>
+                <option value="Z-A" {% if request.GET.order_by  == "ZA" %} selected {% endif %}>
+                    De la Z-A
+                </option>
+                <option value="user-rating" {% if request.GET.order_by  == "rating" %} selected {% endif %}>
+                    Rating de usuarios
+                </option>
+            </select>
+    </div>
+    <div id="filters">
+        <div >
+            <h5> <b> Filtrar </b></h5>
+               <b>Pais: </b> <br>
+            <input id="country" type="text" name="country" value={% if request.GET.country  != "" %} {{ request.GET.country }} {% endif %}><br>
+            <b> Rating: </b> <br>
+            Mínimo <br>
+            <input id="low_range" type="number" name="uni_cal" min="0" max="5" step="0.1" value={% if request.GET.low_range  != "" %} {{ request.GET.low_range }} {% endif %}> <br>
+            Máximo <br>
+            <input id="high_range" type="number" name="uni_cal" min="0" max="5" step="0.1" value={% if request.GET.high_range  != "" %} {{ request.GET.high_range }} {% endif %}> <br>
+            <button id="goBtn" class="btn btn-outline-secondary" style="margin-top: 5px;margin-bottom: 5px;"> Vamos </button>
+        </div>
+
+
+
+          </div>
+
+
+
+        <div id="filters">
+        <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nombre universidad" id="uName" value={% if request.GET.uname  != "" %} {{ request.GET.uname}} {% endif %}>
+                <div class="input-group-append">
+                  <button class="btn btn-secondary" type="button" id="uNameBtn">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+        </div>
+
+    </div>
+
+    <a href="/university" class="btn btn-outline-secondary">
+          <span class="badge badge-secondary"></span> Limpiar filtros
+    </a>
+    </div>
+
+
+
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("mySelect").value;
+  var searchParams = new URLSearchParams(window.location.search);
+  switch (x) {
+      case "A-Z":
+          searchParams.set("order_by", "AZ");
+          break;
+      case "Z-A":
+          searchParams.set("order_by", "ZA");
+          break;
+      case "user-rating":
+          searchParams.set("order_by", "rating");
+          break;
+  }
+    window.location.search = searchParams.toString();
+}
+
+document.getElementById("goBtn").addEventListener("click", redirectSearch);
+
+function redirectSearch() {
+  var country = document.getElementById("country").value;
+  var low_range = document.getElementById("low_range").value;
+  var high_range = document.getElementById("high_range").value;
+  var searchParams = new URLSearchParams(window.location.search);
+
+    if(country != "")
+   searchParams.set("country", country);
+    if(low_range != "")
+   searchParams.set("low_range", low_range);
+    if(high_range != "")
+   searchParams.set("high_range", high_range);
+
+   window.location.search = searchParams.toString();
+}
+
+document.getElementById("uNameBtn").addEventListener("click", nameSearch);
+
+function nameSearch(){
+    var name = document.getElementById("uName").value
+    var searchParams = new URLSearchParams(window.location.search);
+
+    searchParams.set("uname", name);
+
+    window.location.search = searchParams.toString();
+}
+
+
+</script>
+
+<div class="centered-container">
+<div class="container">
+  <div class="row">
+    <div class="col-20 col-sm-20 col-lg-8">
+      <h6 class="text-muted">Lista de universidades</h6>
+      <ul class="list-group">
+          {% for u in universities %}
+        <a href="{{ u.id }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <div class="flex-column">
+            {{ u.name }}
+            <!-- <p><small>by Miguel de Cervantes</small></p>
+            <span class="badge badge-info badge-pill"> 2 Copies in Stock</span>
+            -->
+              <div>
+                  <b>Puntaje usuarios: </b>
+              <img src = "https://creative-it.ie/wp-content/uploads/2018/02/orange-rating-star-256.gif" width="20" height="20">
+              <span class="badge badge-info badge-pill">  {{ u.rating }}/5.0  </span>
+              </div>
+              <div>
+
+                  <b> Rank THE: </b>{{ u.times_higher_ed }}
+              </div>
+          </div>
+          <div class="image-parent">
+              <img src="/media/{{ u.logo }}" class="img-fluid" alt="LOGO-U" height="100" width="100">
+          </div>
+        </a>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+</div>
+{% include 'footer.html' %}

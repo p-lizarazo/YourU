@@ -1,0 +1,92 @@
+{% include 'header.html' with tab=2%}
+
+
+<section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Crear Plan</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Crear Plan</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+<style>
+    #all{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+</style>
+
+<div id="all">
+
+{% if user.is_authenticated %}
+<div class="container">
+    <form method="post" action="">
+        <div class="form-group">
+        {% csrf_token %}
+        <label for="planName"> Nombre de mi plan: </label>
+        <input type="text" name="plan_name" id="planName">
+        </div>
+        <div class="form-group">
+            <label for="programs">Seleccione universidad: </label>
+            <select class="form-control" id="uniChoice" name="universities" onchange="progFunction()" >
+                <option > </option>
+                {% for univ in universities%}
+                  <option value="{{univ.id}}">{{ univ.name }} </option>
+                {% endfor %}
+            </select>
+
+            <label for="programs">Seleccione programa: </label>
+            <select class="form-control" id="progChoice" name="program">
+
+            </select>
+
+        </div>
+        <label><input type="checkbox" id="cbox1" name="costo_matricula" value="True"> Incluir Matricula?</label><br>
+        <label><input type="checkbox" id="cbox1" name="costo_habitacion" value="True"> Incluir costo habitación?</label><br>
+        <label><input type="checkbox" id="cbox1" name="costo_alimentacion" value="True"> Incluir costo alimentación?</label><br>
+        <label><input type="checkbox" id="cbox1" name="costo_transporte" value="True"> Incluir costo transporte? </label><br>
+        <button type="submit" class="btn btn-outline-secondary">Guardar</button>
+    </form>
+</div>
+    <script>
+
+    function progFunction() {
+        var selectProgram = document.getElementById("progChoice");
+        selectProgram.innerHTML = '';
+
+        var uni = document.getElementById("uniChoice").value;
+        var faculties = {{ faculties|safe }};
+         var programs = {{ programs|safe }};
+        console.log(programs);
+        console.log(faculties);
+        for(var i=0;i<programs.length; i++){
+
+            for(var j=0;j<faculties.length;j++){
+                if(faculties[j].pk == programs[i].fields.faculty ) {
+                    if(faculties[j].fields.university == uni){
+                        var el = document.createElement("OPTION");
+                        el.setAttribute("value", programs[i].pk );
+                        var text = document.createTextNode(programs[i].fields.name);
+                        el.appendChild(text);
+                        selectProgram.appendChild(el);
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
+    </script>
+
+{% endif %}
+
+</div>
+{% include 'footer.html' %}

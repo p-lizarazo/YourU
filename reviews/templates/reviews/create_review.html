@@ -1,0 +1,104 @@
+{% include 'header.html' with tab=3%}
+
+
+{% if user.is_authenticated %}
+
+    <section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Crear Opinión</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Crear Opinión</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+
+<div class="container" style="margin-top:30px;margin-bottom: 30px;">
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="programs">Seleccione universidad: </label>
+            <select class="form-control" id="uniChoice" name="universities" onchange="progFunction()" >
+                <option > </option>
+                {% for univ in universities%}
+                  <option value="{{univ.id}}">{{ univ.name }} </option>
+                {% endfor %}
+            </select>
+
+            <label for="programs">Seleccione programa: </label>
+            <select class="form-control" id="progChoice" name="program">
+
+            </select>
+
+        </div>
+    <div class="form-group">
+            <label for="descUni">Describa la experiencia en la Universidad: </label> </p>
+
+    </div>
+    <div class="form-group">
+
+                <textarea name="descUni" cols="50" rows="10"></textarea>
+    </div>
+     <div class="form-group">
+            <label for="uni_cal">Calificación de la Universidad: </label>
+
+     </div>
+    <div class="form-group">
+            <input type="number" name="uni_cal" min="1" max="5" step="0.1">
+     </div>
+     <div class="form-group">
+            <label for="descProgram">Describa la experiencia en el programa: </label>
+     </div>
+    <div class="form-group">
+            <textarea name="descProgram" cols="50" rows="10"></textarea>
+     </div>
+    <div class="form-group">
+            <label for="uni_cal">Calificación del Programa: </label>
+    </div>
+    <div class="form-group">
+            <input type="number" name="prog_cal" min="1" max="5" step="0.1">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-outline-secondary">Guardar</button>
+    </div>
+    </form>
+</div>
+
+    <script>
+
+    function progFunction() {
+        var selectProgram = document.getElementById("progChoice");
+        selectProgram.innerHTML = '';
+
+        var uni = document.getElementById("uniChoice").value;
+        var faculties = {{ faculties|safe }};
+         var programs = {{ programs|safe }};
+        console.log(programs);
+        console.log(faculties);
+        for(var i=0;i<programs.length; i++){
+
+            for(var j=0;j<faculties.length;j++){
+                if(faculties[j].pk == programs[i].fields.faculty ) {
+                    if(faculties[j].fields.university == uni){
+                        var el = document.createElement("OPTION");
+                        el.setAttribute("value", programs[i].pk );
+                        var text = document.createTextNode(programs[i].fields.name);
+                        el.appendChild(text);
+                        selectProgram.appendChild(el);
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
+    </script>
+
+{% endif %}
+
+{% include 'footer.html' %}
